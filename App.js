@@ -1,16 +1,25 @@
 import React, { Component } from 'react';
-import { Platform, StyleSheet, View } from 'react-native';
+import { Platform, StyleSheet, StatusBar, View } from 'react-native';
 import reducer from './reducers';
 import { createStore } from 'redux';
 import { Provider } from 'react-redux';
 import { TabNavigator, StackNavigator } from 'react-navigation'
 import Decks from './components/Decks';
+import DeckForm from './components/DeckForm';
 import { FontAwesome } from '@expo/vector-icons';
-import { purple, white } from './utils/colors';
+import { gray, orange, white } from './utils/colors';
+import { Constants } from 'expo'
 
 
 const Tabs = TabNavigator({
-  History: {
+  Form: {
+    screen: DeckForm,
+    navigationOptions: {
+      tabBarLabel: 'New Deck',
+      tabBarIcon: ({ tintColor }) => <FontAwesome name='plus-circle' size={30} color={tintColor} />
+    },
+  },
+  Main: {
     screen: Decks,
     navigationOptions: {
       tabBarLabel: 'Decks',
@@ -22,10 +31,10 @@ const Tabs = TabNavigator({
     header: null
   },
   tabBarOptions: {
-    activeTintColor: Platform.OS === 'ios' ? purple : white,
+    activeTintColor: Platform.OS === 'ios' ? orange : white,
     style: {
       height: 56,
-      backgroundColor: Platform.OS === 'ios' ? white : purple,
+      backgroundColor: Platform.OS === 'ios' ? white : orange,
       shadowColor: 'rgba(0, 0, 0, 0.24)',
       shadowOffset: {
         width: 0,
@@ -43,20 +52,23 @@ const MainNavigator = StackNavigator({
   },
 });
 
+function DeckStatusBar ({ backgroundColor, ...props }) {
+  return (
+    <View style={{ backgroundColor, height: Constants.statusBarHeight }}>
+      <StatusBar translucent backgroundColor={backgroundColor} {...props} />
+    </View>
+  )
+}
+
 export default class App extends Component {
   render() {
     return (
       <Provider store={createStore(reducer)}>
-        <View style={styles.container}>
+        <View style={{flex: 1}}>
+          <DeckStatusBar backgroundColor={gray} barStyle="light-content" />
           <MainNavigator />
         </View>
       </Provider>
     );
   }
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1
-  },
-});
