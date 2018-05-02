@@ -6,24 +6,25 @@ import { Provider } from 'react-redux';
 import { TabNavigator, StackNavigator } from 'react-navigation'
 import Decks from './components/Decks';
 import DeckForm from './components/DeckForm';
+import DeckDetail from './components/DeckDetail';
 import { FontAwesome } from '@expo/vector-icons';
 import { gray, orange, white } from './utils/colors';
 import { Constants } from 'expo'
 
 
 const Tabs = TabNavigator({
-  Form: {
-    screen: DeckForm,
-    navigationOptions: {
-      tabBarLabel: 'New Deck',
-      tabBarIcon: ({ tintColor }) => <FontAwesome name='plus-circle' size={30} color={tintColor} />
-    },
-  },
   Main: {
     screen: Decks,
     navigationOptions: {
       tabBarLabel: 'Decks',
       tabBarIcon: ({ tintColor }) => <FontAwesome name='clone' size={30} color={tintColor} />
+    },
+  },
+  Form: {
+    screen: DeckForm,
+    navigationOptions: {
+      tabBarLabel: 'New Deck',
+      tabBarIcon: ({ tintColor }) => <FontAwesome name='plus-circle' size={30} color={tintColor} />
     },
   },
 }, {
@@ -50,6 +51,15 @@ const MainNavigator = StackNavigator({
   Home: {
     screen: Tabs,
   },
+  DeckDetail: {
+    screen: DeckDetail,
+    navigationOptions: {
+      headerTintColor: white,
+      headerStyle: {
+        backgroundColor: orange,
+      }
+    }
+  }
 });
 
 function DeckStatusBar ({ backgroundColor, ...props }) {

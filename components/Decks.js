@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { ScrollView, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
-import { black, white } from '../utils/colors';
+import { black, white, gray } from '../utils/colors';
 import { connect } from 'react-redux';
 
 class Decks extends Component {
@@ -10,13 +10,16 @@ class Decks extends Component {
     return (
       <ScrollView style={{ flex: 1, backgroundColor: white }}>
         <View>
-          {Object.keys(decks).map((item) => {
-            const deck = this.props.decks[item];
+          {Object.keys(decks).map((deckId) => {
+            const deck = this.props.decks[deckId];
 
             return (
-              <TouchableOpacity key={item} style={styles.deck} onPress={() => { console.log(item) }}>
+              <TouchableOpacity key={deckId} style={styles.deck} onPress={() => this.props.navigation.navigate(
+                'DeckDetail',
+                { deckId, title: deck.title }
+              )}>
                   <Text style={styles.deckTitle}>{deck.title}</Text>
-                  <Text style={styles.deckDescription}>Cards {deck.questions.length}</Text>
+                  <Text style={styles.deckDescription}>Cards: {deck.questions.length}</Text>
               </TouchableOpacity>
             );
           })}
@@ -39,10 +42,13 @@ const styles = StyleSheet.create({
     borderWidth: 0.5
   },
   deckTitle: {
+    fontWeight: 'bold',
     textAlign: 'center',
+    fontSize: 20,
   },
   deckDescription: {
     textAlign: 'center',
+    color: gray
   }
 });
 
