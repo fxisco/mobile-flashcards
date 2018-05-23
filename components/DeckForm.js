@@ -1,6 +1,10 @@
 import React, { Component } from 'react';
 import { Platform, StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native';
-import { black, orange, white } from '../utils/colors';
+import { connect } from 'react-redux';
+import { addDeck } from '../actions';
+import { submitDeck } from '../utils/api'
+import { camelize } from '../helpers';
+import { orange, white } from '../utils/colors';
 
 function SubmitBtn ({ onPress }) {
   return (
@@ -15,15 +19,25 @@ function SubmitBtn ({ onPress }) {
 class DeckForm extends Component {
   state = {
     text: ''
-  }
+  };
 
   onFormSubmit = () => {
-    console.log('Submitting form name', this.state.text);
+    const id = camelize(this.state.text);
+    const newDeck = {
+      title: this.state.text,
+      questions: []
+    };
+
+    this.props.dispatch(addDeck(id, newDeck));
 
     this.setState({
       text: ''
     });
-  }
+
+    submitDeck(id, newDeck);
+
+    this.props.navigation.navigate('Home');
+  };
 
   render() {
     const { decks }  = this.props;
@@ -102,4 +116,4 @@ const styles = StyleSheet.create({
   }
 });
 
-export default DeckForm;
+export default connect()(DeckForm);

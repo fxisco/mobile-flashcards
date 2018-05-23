@@ -2,10 +2,28 @@ import React, { Component } from 'react';
 import { ScrollView, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import { black, white, gray } from '../utils/colors';
 import { connect } from 'react-redux';
+import { fetchDecksResults } from '../utils/api';
+import { receiveDecks } from '../actions';
+import { AppLoading } from 'expo'
 
 class Decks extends Component {
+  state = {
+    ready: false,
+  }
+  componentDidMount () {
+    const { dispatch } = this.props;
+
+    fetchDecksResults()
+      .then((entries) => dispatch(receiveDecks(entries)))
+      .then(() => this.setState(() => ({ ready: true })));
+  }
   render() {
     const { decks }  = this.props;
+    const { ready } = this.state;
+
+    if (!ready) {
+      return <AppLoading />
+    }
 
     return (
       <ScrollView style={{ flex: 1, backgroundColor: white }}>

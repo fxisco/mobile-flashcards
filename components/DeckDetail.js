@@ -8,8 +8,7 @@ class DeckDetail extends Component {
     return {
       title: 'Deck Detail'
     }
-  }
-
+  };
   render() {
     const { deck } = this.props;
     const { questions } = deck;
