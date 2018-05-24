@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import { View, Text, TouchableOpacity, StyleSheet } from 'react-native'
 import { connect } from 'react-redux'
-import {white, gray, black} from '../utils/colors';
+import { white, gray, black } from '../utils/colors';
 
 class DeckDetail extends Component {
   static navigationOptions = ({ navigation }) => {
@@ -12,6 +12,7 @@ class DeckDetail extends Component {
   render() {
     const { deck } = this.props;
     const { questions } = deck;
+    const { deckId } = this.props.navigation.state.params;
 
     return (
       <View style={styles.container}>
@@ -20,14 +21,17 @@ class DeckDetail extends Component {
           <Text style={styles.subTitle}>{`Cards: ${questions.length}`}</Text>
         </View>
         <View style={styles.actionsContainer}>
-          <TouchableOpacity style={styles.startQuizButton}>
-            <Text style={styles.startQuizButtonText}>Add Card</Text>
-          </TouchableOpacity>
           {questions.length > 0 &&
-            <TouchableOpacity style={styles.addCardButton}>
-              <Text style={styles.addCardButtonText}>Start Quiz</Text>
+            <TouchableOpacity style={styles.startQuizButton}>
+              <Text style={styles.startQuizButtonText}>Start Quiz</Text>
             </TouchableOpacity>
           }
+          <TouchableOpacity style={styles.addCardButton} onPress={() => this.props.navigation.navigate(
+            'AddCard',
+            { deckId }
+          )}>
+            <Text style={styles.addCardButtonText}>Add Card</Text>
+          </TouchableOpacity>
         </View>
       </View>
     )
@@ -42,7 +46,7 @@ const styles = StyleSheet.create({
   },
   titleContainer: {
     flex: 1,
-    justifyContent: 'center'
+    justifyContent: 'center',
   },
   title: {
     textAlign: 'center',

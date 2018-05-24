@@ -7,6 +7,7 @@ import { TabNavigator, StackNavigator } from 'react-navigation'
 import Decks from './components/Decks';
 import DeckForm from './components/DeckForm';
 import DeckDetail from './components/DeckDetail';
+import AddCard from './components/AddCard';
 import { FontAwesome } from '@expo/vector-icons';
 import { gray, orange, white } from './utils/colors';
 import { Constants } from 'expo'
@@ -50,6 +51,9 @@ const Tabs = TabNavigator({
 const MainNavigator = StackNavigator({
   Home: {
     screen: Tabs,
+  },
+  AddCard: {
+    screen: AddCard,
   },
   DeckDetail: {
     screen: DeckDetail,
