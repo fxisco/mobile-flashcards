@@ -63,7 +63,7 @@ class AddCard extends Component {
           <Text style={styles.label}>Validation</Text>
         </View>
         <View style={styles.answerContainer}>
-          {question && answer &&
+          {question.length > 0 && answer.length > 0 &&
             <TouchableOpacity
               style={styles.AddCardButton}
               onPress={this.handleAddCard}

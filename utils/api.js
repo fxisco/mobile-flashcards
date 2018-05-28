@@ -15,10 +15,6 @@ export function submitDeck (key, deck) {
   }))
 }
 
-export function reset () {
-  return AsyncStorage.setItem(APP_STORAGE_KEY, JSON.stringify({}));
-}
-
 export function submitCard (deckId, card) {
   return AsyncStorage.getItem(APP_STORAGE_KEY)
     .then((results) => {

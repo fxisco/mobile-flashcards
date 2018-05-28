@@ -12,6 +12,7 @@ import Quiz from './components/Quiz';
 import { FontAwesome } from '@expo/vector-icons';
 import { gray, orange, white } from './utils/colors';
 import { Constants } from 'expo'
+import { setLocalNotification } from './utils/helpers';
 
 
 const Tabs = TabNavigator({
@@ -79,6 +80,9 @@ function DeckStatusBar ({ backgroundColor, ...props }) {
 }
 
 export default class App extends Component {
+  componentDidMount() {
+    setLocalNotification()
+  }
   render() {
     return (
       <Provider store={createStore(reducer)}>

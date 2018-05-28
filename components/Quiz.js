@@ -9,6 +9,11 @@ import {
   white,
 } from '../utils/colors';
 
+import {
+  clearLocalNotification,
+  setLocalNotification
+} from '../utils/helpers';
+
 const Questionnaire = ({ index, questions, onShowAnswer, onAnswerQuestion ,showAnswer }) => {
   const currentQuestion = questions[index];
   const answerTitle = showAnswer ? `Show Question` : 'Show answer';
@@ -84,6 +89,16 @@ class Quiz extends Component {
     correctAnswers: 0
   };
 
+  componentWillUpdate = (nextProps, nextState) => {
+    const { deck } = this.props;
+    const { questions } = deck;
+
+    if (nextState.index === questions.length) {
+      clearLocalNotification()
+        .then(setLocalNotification);
+    }
+  };
+
   handlePunctuation = (isCorrect) => {
     const { correctAnswers, index } = this.state;
     const update = {
@@ -146,7 +161,6 @@ const styles = StyleSheet.create({
   },
   showAnswerText: {
     textAlign: 'center',
-    fontWeight: 0.4,
     color: red
   },
   questionContainer: {

@@ -3,7 +3,7 @@ import { Platform, StyleSheet, Text, TextInput, TouchableOpacity, View } from 'r
 import { connect } from 'react-redux';
 import { addDeck } from '../actions';
 import { submitDeck } from '../utils/api';
-import { camelize } from '../helpers';
+import { camelize } from '../utils/helpers';
 import { orange, white } from '../utils/colors';
 
 function SubmitBtn ({ onPress }) {
@@ -54,7 +54,7 @@ class DeckForm extends Component {
           />
         </View>
         <View style={styles.buttonContainer}>
-          {this.state.text && <SubmitBtn onPress={this.onFormSubmit} />}
+          {this.state.text.length > 0 && <SubmitBtn onPress={this.onFormSubmit} />}
         </View>
       </View>
     )
