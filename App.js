@@ -8,6 +8,7 @@ import Decks from './components/Decks';
 import DeckForm from './components/DeckForm';
 import DeckDetail from './components/DeckDetail';
 import AddCard from './components/AddCard';
+import Quiz from './components/Quiz';
 import { FontAwesome } from '@expo/vector-icons';
 import { gray, orange, white } from './utils/colors';
 import { Constants } from 'expo'
@@ -54,6 +55,9 @@ const MainNavigator = StackNavigator({
   },
   AddCard: {
     screen: AddCard,
+  },
+  Quiz: {
+    screen: Quiz,
   },
   DeckDetail: {
     screen: DeckDetail,

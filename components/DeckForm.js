@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { Platform, StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native';
 import { connect } from 'react-redux';
 import { addDeck } from '../actions';
-import { submitDeck } from '../utils/api'
+import { submitDeck } from '../utils/api';
 import { camelize } from '../helpers';
 import { orange, white } from '../utils/colors';
 

@@ -22,14 +22,17 @@ class DeckDetail extends Component {
         </View>
         <View style={styles.actionsContainer}>
           {questions.length > 0 &&
-            <TouchableOpacity style={styles.startQuizButton}>
+            <TouchableOpacity
+              style={styles.startQuizButton}
+              onPress={() => this.props.navigation.navigate('Quiz', { deckId })}
+            >
               <Text style={styles.startQuizButtonText}>Start Quiz</Text>
             </TouchableOpacity>
           }
-          <TouchableOpacity style={styles.addCardButton} onPress={() => this.props.navigation.navigate(
-            'AddCard',
-            { deckId }
-          )}>
+          <TouchableOpacity
+            style={styles.addCardButton}
+            onPress={() => this.props.navigation.navigate('AddCard', { deckId })}
+          >
             <Text style={styles.addCardButtonText}>Add Card</Text>
           </TouchableOpacity>
         </View>
@@ -92,5 +95,5 @@ function mapStateToProps ({ decks }, props) {
 }
 
 export default connect(
-  mapStateToProps,
+  mapStateToProps
 )(DeckDetail);

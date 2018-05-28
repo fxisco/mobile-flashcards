@@ -2,14 +2,14 @@ import React, { Component } from 'react';
 import { ScrollView, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import { black, white, gray } from '../utils/colors';
 import { connect } from 'react-redux';
-import { fetchDecksResults } from '../utils/api';
+import { fetchDecksResults, reset } from '../utils/api';
 import { receiveDecks } from '../actions';
 import { AppLoading } from 'expo'
 
 class Decks extends Component {
   state = {
     ready: false,
-  }
+  };
   componentDidMount () {
     const { dispatch } = this.props;
 
@@ -27,6 +27,11 @@ class Decks extends Component {
 
     return (
       <ScrollView style={{ flex: 1, backgroundColor: white }}>
+        <TouchableOpacity
+          onPress={() => { reset(); }}
+        >
+          <Text style={styles.AddCardButtonText}>Reset</Text>
+        </TouchableOpacity>
         <View>
           {Object.keys(decks).map((deckId) => {
             const deck = this.props.decks[deckId];

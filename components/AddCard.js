@@ -1,11 +1,24 @@
 import React, { Component } from 'react';
 import { StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native';
-import { white, gray, black } from '../utils/colors';
+import { connect } from 'react-redux';
+import { addCard } from '../actions';
+import { submitCard } from '../utils/api';
+import {
+  black,
+  gray,
+  white,
+} from '../utils/colors';
 
 class AddCard extends Component {
   state = {
     question: '',
     answer: ''
+  };
+
+  static navigationOptions = ({ navigation }) => {
+    return {
+      title: 'Add Card'
+    }
   };
 
   handleInputTextChange = (text, key) => {
@@ -14,9 +27,23 @@ class AddCard extends Component {
     })
   };
 
+  handleAddCard = () => {
+    const { deckId } = this.props.navigation.state.params;
+    const { question, answer } = this.state;
+    const newCard = {
+      question,
+      answer
+    };
+
+    this.props.dispatch(addCard(deckId, newCard));
+
+    submitCard(deckId, newCard);
+
+    this.props.navigation.goBack();
+  };
+
   render() {
     const { answer, question } = this.state;
-    console.log(answer, question);
 
     return (
       <View style={styles.container}>
@@ -33,10 +60,14 @@ class AddCard extends Component {
             value={answer}
             onChangeText={(text) => this.handleInputTextChange(text, 'answer')}
           />
+          <Text style={styles.label}>Validation</Text>
         </View>
         <View style={styles.answerContainer}>
           {question && answer &&
-            <TouchableOpacity style={styles.AddCardButton}>
+            <TouchableOpacity
+              style={styles.AddCardButton}
+              onPress={this.handleAddCard}
+            >
               <Text style={styles.AddCardButtonText}>Add Card</Text>
             </TouchableOpacity>
           }
@@ -53,7 +84,7 @@ const styles = StyleSheet.create({
   },
   questionContainer: {
     flex: 1,
-    justifyContent: 'center',
+    justifyContent: 'center'
   },
   answerContainer: {
     flex: 1,
@@ -81,7 +112,7 @@ const styles = StyleSheet.create({
   AddCardButtonText: {
     color: white,
     textAlign: 'center'
-  },
+  }
 });
 
-export default AddCard;
+export default connect()(AddCard);
